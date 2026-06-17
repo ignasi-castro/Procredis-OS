@@ -48,8 +48,9 @@ Key patterns already established from data:
 
 Read `/Users/luiscastro/LinkedIn-Content-OS/data/competitor_posts.json`.
 
-For each pillar you're generating a post for, find the highest-performing competitor post tagged with that pillar.
-Note: `angle` (what made it work), `hook_formula` used, `likes` count.
+For each pillar you're generating a post for, find the single highest-performing competitor post tagged with that pillar (sort by `likes` + `comments × 3`).
+
+**Pull the FULL TEXT of that post.** You will be doing a close variation on it — you need every word.
 
 If competitor_posts.json is empty, skip this step and rely on own data only.
 
@@ -77,59 +78,53 @@ Assign one post per pillar (rotate through all 5 each week):
 Mix: 2 TOFU + 2 MOFU + 1 BOFU
 - BOFU must go on whichever pillar has the best proof point available this week
 
-For each post, select:
-- **Hook formula** — default to Observation Authority or Insider Stack Reveal (best performers). Use competitor data to validate angle.
-- **Angle** — the specific insight, tension, or data point that drives engagement. Taken from: competitor post angle, our own top-performer pattern, or a proof point from services.md
-- **Funnel stage** — TOFU/MOFU/BOFU based on the week's mix target
+For each post, identify:
+- The exact competitor post you'll use as the base (competitor name, post id, likes count, full text preview)
+- Which specific words to swap: their credentials → ours, their tools → our tools, their subject → our equivalent pillar
+- Funnel stage — TOFU/MOFU/BOFU based on the week's mix target
+
+Show this plan to the user and confirm before writing.
 
 ---
 
-## STEP 6 — WRITE ALL 5 POSTS
+## STEP 6 — WRITE ALL 5 POSTS AS CLOSE VARIATIONS
 
-For each post, follow this exact structure:
+**THIS IS THE MOST IMPORTANT RULE IN THIS SKILL.**
 
-```
-HOOK (lines 1–2):
-  - Under 140 chars
-  - Never start with "I"
-  - Specific number, name, or sharp observation — never vague
-  - Must stop scroll before "see more"
+You are NOT writing new posts. You are doing close variations of proven competitor posts.
 
-BRIDGE (lines 3–4):
-  - "Here's why." / "Here's how." / "Here's what we found." / "Most teams get this wrong."
+**The method:**
+1. Take the exact competitor post text, word for word.
+2. Identify every place that refers to the competitor's credentials, tools, company, clients, or subject.
+3. Swap only those specific words/phrases for Procredis equivalents:
+   - Their credentials → Ignasi's credentials ("I've built revenue systems for DHL, FC Barcelona, Microsoft")
+   - Their tools → our tools (Clay, HubSpot, Instantly.ai, HeyReach.io, Parabola)
+   - Their subject/niche → our equivalent pillar subject
+   - Their company name → Procredis
+   - Their clients → our proof points (keeping accuracy rules)
+4. Keep every other sentence as close to the original as possible.
+5. Target: 80%+ of the original words/flow should survive unchanged.
 
-BODY:
-  - Short paragraphs — max 2–3 lines per block
-  - One idea per paragraph
-  - Clear line breaks between every block
-  - Numbered or bulleted framework where applicable
-  - Embed proof points naturally in body, never appended at end
-  - 3 types of numbers where possible: volume + metric + contrast
+**What changes:**
+- Credentials, tools, company name, specific clients
+- Numbers that are specific to them (replace with our verified numbers)
+- Any claims that would be false for us (omit or replace with what's true)
 
-CLOSE:
-  - Punchy takeaway, question that invites comments, or soft CTA
-  - No "comment YES if you agree" or hollow engagement bait
+**What does NOT change:**
+- The hook structure and first line format
+- The flow and rhythm of the body
+- The transition phrases
+- The numbered sections and their order
+- The CTA structure
+- The tone and sentence length
 
-OPTIONAL P.S.:
-  - Only if it adds a genuinely useful second insight or CTA
-```
+**NEVER:**
+- Rewrite the post from scratch using "the same theme"
+- Create a new post "inspired by" the competitor post
+- Change the structure because you think a different structure would work better
+- Start with a different kind of hook
 
-Character count targets:
-- Educational / framework: 1,900–2,700
-- Story / personal: 1,400–2,100
-- Comment-gated / list: 1,200–1,800
-
-**Internal checklist before showing each post (fix silently if failing):**
-- [ ] Hook stops scroll in under 2 seconds?
-- [ ] No false claims?
-- [ ] 3 specific numbers in body?
-- [ ] Proof in lines 1–3?
-- [ ] Short sentences + line breaks throughout?
-- [ ] CTA at end?
-- [ ] No forbidden phrases?
-- [ ] Character count in range?
-
-If a post fails more than 2 checklist items, rewrite before showing.
+If you find yourself writing a post that doesn't look like the original with swapped words, stop and redo it as described above.
 
 ---
 
@@ -144,20 +139,25 @@ PILLAR:        [name]
 HOOK FORMULA:  [name]
 TYPE:          [TOFU/MOFU/BOFU]
 CHAR COUNT:    [number]
-INSPIRED BY:   [competitor name + their post angle, or "own data"]
+SOURCE:        [competitor name] — [their post likes]L / [their post comments]C (post id: [id])
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+ORIGINAL (first 3 lines):
+[first 3 lines of competitor post verbatim]
+
+OUR VARIATION:
 [full post text — ready to copy-paste]
 
+WHAT CHANGED: [bullet list of the specific swaps made]
 VISUAL: [Text-only | Single image — description | Carousel — what each slide covers]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 After all 5, show a summary table:
 
-| # | Pillar | Hook | Type | Char |
-|---|--------|------|------|------|
-| 1 | ... | ... | ... | ... |
+| # | Pillar | Source Competitor | Source Likes | Type | Char |
+|---|--------|-------------------|--------------|------|------|
+| 1 | ... | ... | ... | ... | ... |
 
 ---
 
