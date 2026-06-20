@@ -27,15 +27,21 @@ Read these files in parallel:
 
 ## STEP 2 — FIND A HIGH-PERFORMING COMPETITOR POST
 
-Read `/Users/luiscastro/LinkedIn-Content-OS/data/competitor_posts.json`.
+**Source: Notion Competitor Posts database** (`collection://14d10dfe-efd5-4cb1-b936-15e5d4e2a415`)
 
 Ask the user (or auto-select if they say "just go"):
 - Which pillar? (GTM Tools / ABM / RevOps / Outbound / Storytelling)
-- Or pick the pillar with the best-performing competitor post not yet used (`used_for_post: false`)
+- Or pick the best available
 
-From that pillar, find the post with the highest engagement score (`likes + comments × 3`).
+Use `mcp__claude_ai_Notion__notion-search` with:
+- `data_source_url: "collection://14d10dfe-efd5-4cb1-b936-15e5d4e2a415"`
+- `query: "<pillar name>"` (e.g. "ABM", "RevOps", "Outbound Systems")
 
-Pull the **full text** of that post.
+From the results, pick the post with the highest engagement (`Likes + Comments × 3`) where `Used For Post` is not checked.
+
+Fetch the full page with `mcp__claude_ai_Notion__notion-fetch` to get the complete post body text.
+
+After writing and uploading our post, mark this page's `Used For Post` as checked via `mcp__claude_ai_Notion__notion-update-page`.
 
 Then analyze it — answer these questions before writing anything:
 
