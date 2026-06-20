@@ -27,27 +27,31 @@ If no posts in the last 7 days: tell the user and stop.
 
 ---
 
-## STEP 2 — FOR EACH POST: COLLECT ENGAGEMENT
+## STEP 2 — SCRAPE WHO ENGAGED ON EACH POST
 
-For each post from the last 7 days, extract:
-- Post title (first 60 chars)
-- Total likes
-- Total comments
-- LinkedIn URL
+For each post URL from Step 1, run two Apify scrapes in parallel:
 
-Then ask the user:
-
-> "I found [N] posts from the last 7 days. For each one, I need you to review who liked and commented — go to the post on LinkedIn and paste in the names + job titles of people who engaged. Focus on anyone that looks like a lead or a competitor."
-
-For each post, the user provides a list like:
-```
-- John Smith — VP Sales at Acme Corp
-- Maria García — RevOps Manager at SaaS Co
-- Dan Rosenthal — GTM consultant (competitor)
-- [etc]
+**Scrape commenters** (public — always works):
+```bash
+curl -s -X POST 'https://api.apify.com/v2/acts/curious_coder~linkedin-post-comments-scraper/runs?token=$APIFY_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{"postUrls":["<post_url>"],"resultsLimit":100}'
 ```
 
-If the user can't or won't review engagement for a post, skip ICP classification for that post and log total only.
+**Scrape likers** (reactions):
+```bash
+curl -s -X POST 'https://api.apify.com/v2/acts/curious_coder~linkedin-post-reactions-scraper/runs?token=$APIFY_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{"postUrls":["<post_url>"],"resultsLimit":200}'
+```
+
+Wait for both runs to complete (poll status), then fetch results.
+
+Extract per person: `name`, `headline` (job title + company), `profileUrl`.
+
+Deduplicate — a person who both liked and commented counts once.
+
+If an actor returns an error or empty results, continue with whatever data is available — don't block the rest of the flow.
 
 ---
 
