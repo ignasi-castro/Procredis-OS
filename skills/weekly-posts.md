@@ -1,6 +1,6 @@
 ---
 name: weekly-posts
-description: Generate 5 LinkedIn posts for the week based on brain data, competitor intelligence, and what's actually worked. Run Sunday night or Monday morning. 2 TOFU + 2 MOFU + 1 BOFU, one per pillar.
+description: Generate LinkedIn posts for Procredis one at a time, inspired by high-performing competitor posts. Analyze why the competitor post worked, then build our own version using the same hook/angle/CTA logic in our voice.
 ---
 
 ## ACCURACY RULES — NON-NEGOTIABLE
@@ -15,163 +15,157 @@ description: Generate 5 LinkedIn posts for the week based on brain data, competi
 
 ---
 
-## STEP 1 — READ BRAIN (do all at once)
+## STEP 1 — READ THE BRAIN
 
 Read these files in parallel:
-- `/Users/luiscastro/LinkedIn-Content-OS/brain/pillars.md`
-- `/Users/luiscastro/LinkedIn-Content-OS/brain/voice.md`
-- `/Users/luiscastro/LinkedIn-Content-OS/brain/icp.md`
-- `/Users/luiscastro/LinkedIn-Content-OS/brain/services.md`
-- `/Users/luiscastro/LinkedIn-Content-OS/brain/competitors.md`
+- `/Users/luiscastro/LinkedIn-Content-OS/brain/icp.md` — who we're writing for
+- `/Users/luiscastro/LinkedIn-Content-OS/brain/services.md` — what we do, proof points
+- `/Users/luiscastro/LinkedIn-Content-OS/brain/pillars.md` — the 5 content pillars and their angles
+- `/Users/luiscastro/LinkedIn-Content-OS/brain/voice.md` — Ignasi's tone, sentence style, hook formulas
 
 ---
 
-## STEP 2 — READ PERFORMANCE DATA
-
-Read `/Users/luiscastro/LinkedIn-Content-OS/data/our_posts.json`.
-
-Extract:
-- Top 3 posts by `total_likes` per pillar — note their `hook_formula` and what made them work
-- Which hook formulas have the highest avg likes overall
-- Which pillars are performing best
-- What post types (TOFU/MOFU/BOFU) have been underused recently
-
-Key patterns already established from data:
-- **Best hook:** Observation Authority (28.7L avg) — lead with it when possible
-- **Best pillars:** ABM (24.4L avg), GTM Tools (22.7L avg)
-- **BOFU is underused** — must include 1 BOFU this week
-- **Carousels = 0** — consider recommending one visual this week
-
----
-
-## STEP 3 — READ COMPETITOR INTELLIGENCE
+## STEP 2 — FIND A HIGH-PERFORMING COMPETITOR POST
 
 Read `/Users/luiscastro/LinkedIn-Content-OS/data/competitor_posts.json`.
 
-For each pillar you're generating a post for, find the single highest-performing competitor post tagged with that pillar (sort by `likes` + `comments × 3`).
+Ask the user (or auto-select if they say "just go"):
+- Which pillar? (GTM Tools / ABM / RevOps / Outbound / Storytelling)
+- Or pick the pillar with the best-performing competitor post not yet used (`used_for_post: false`)
 
-**Pull the FULL TEXT of that post.** You will be doing a close variation on it — you need every word.
+From that pillar, find the post with the highest engagement score (`likes + comments × 3`).
 
-If competitor_posts.json is empty, skip this step and rely on own data only.
+Pull the **full text** of that post.
 
----
+Then analyze it — answer these questions before writing anything:
 
-## STEP 4 — CHECK NOTION PIPELINE
+**Hook analysis:**
+- What is the exact hook (first 1–2 lines)?
+- What makes it stop the scroll? (number, bold claim, controversy, authority, curiosity gap?)
+- What emotion does it trigger in the reader?
 
-Use `mcp__claude_ai_Notion__notion-search` with:
-- `data_source_url: "collection://8077dce9-dc67-40fe-ae84-38790ee40c7c"`
+**Angle analysis:**
+- What is the core argument or insight?
+- Is it contrarian, educational, validating, or aspirational?
+- Why does this resonate with the ICP (VP Sales, RevOps, CRO, Founders)?
 
-Find posts with status "Draft" or "Scheduled" created in the last 14 days.
-Identify which pillars already have posts queued — avoid doubling up on the same pillar.
+**Structure analysis:**
+- How is the body organized? (numbered list, story, framework, before/after?)
+- Where is the proof or credibility embedded?
+- How long is it and why does that length work?
 
----
+**CTA analysis:**
+- What action does it ask for and why does that CTA fit this post?
+- Is it a question, a comment trigger, a DM offer, or a repost ask?
 
-## STEP 5 — PLAN THE 5 POSTS
-
-Assign one post per pillar (rotate through all 5 each week):
-1. GTM Tools & Tech Stack
-2. ABM
-3. RevOps
-4. Outbound Systems
-5. Storytelling
-
-Mix: 2 TOFU + 2 MOFU + 1 BOFU
-- BOFU must go on whichever pillar has the best proof point available this week
-
-For each post, identify:
-- The exact competitor post you'll use as the base (competitor name, post id, likes count, full text preview)
-- Which specific words to swap: their credentials → ours, their tools → our tools, their subject → our equivalent pillar
-- Funnel stage — TOFU/MOFU/BOFU based on the week's mix target
-
-Show this plan to the user and confirm before writing.
+**Why it performed well:**
+- Write 2–3 sentences explaining why this post got the engagement it did. Be specific.
 
 ---
 
-## STEP 6 — WRITE ALL 5 POSTS AS CLOSE VARIATIONS
+## STEP 3 — BUILD OUR VERSION
 
-**THIS IS THE MOST IMPORTANT RULE IN THIS SKILL.**
+Now write our post. The goal is NOT to copy — it is to use the same strategic weapons (hook type, angle, structure, CTA mechanic) that made the competitor post work, loaded with our voice, our proof points, and our ICP.
 
-You are NOT writing new posts. You are doing close variations of proven competitor posts.
+**What to carry over from the competitor post:**
+- The hook TYPE (e.g. bold contrarian claim, specific number, authority opener) — not the words
+- The core angle (e.g. "everyone thinks X but actually Y") — adapted to our pillar
+- The body structure (e.g. numbered framework, before/after) — rebuilt with our content
+- The CTA mechanic (e.g. "comment X to get Y", question, DM offer) — if it fits us
 
-**The method:**
-1. Take the exact competitor post text, word for word.
-2. Identify every place that refers to the competitor's credentials, tools, company, clients, or subject.
-3. Swap only those specific words/phrases for Procredis equivalents:
-   - Their credentials → Ignasi's credentials ("I've built revenue systems for DHL, FC Barcelona, Microsoft")
-   - Their tools → our tools (Clay, HubSpot, Instantly.ai, HeyReach.io, Parabola)
-   - Their subject/niche → our equivalent pillar subject
-   - Their company name → Procredis
-   - Their clients → our proof points (keeping accuracy rules)
-4. Keep every other sentence as close to the original as possible.
-5. Target: 80%+ of the original words/flow should survive unchanged.
+**What to replace entirely:**
+- All specific claims → our proof points and verified stats only
+- Their tools → our tools (Clay, HubSpot, Instantly.ai, HeyReach.io, Parabola)
+- Their credentials → Ignasi's credentials and Procredis's results
+- Their clients/cases → our proof points (following accuracy rules above)
 
-**What changes:**
-- Credentials, tools, company name, specific clients
-- Numbers that are specific to them (replace with our verified numbers)
-- Any claims that would be false for us (omit or replace with what's true)
+**Voice rules (from voice.md — always apply):**
+- Short sentences. One idea per line.
+- Lead with the result, never with context.
+- Numbers: volume + metric + contrast wherever possible.
+- No emojis unless they add visual structure (→ ✓ ok, 🚀 🙏 not ok)
+- Tone: direct, confident, practitioner — not guru, not coach
 
-**What does NOT change:**
-- The hook structure and first line format
-- The flow and rhythm of the body
-- The transition phrases
-- The numbered sections and their order
-- The CTA structure
-- The tone and sentence length
+**Post length:**
+- TOFU: 150–250 words
+- MOFU: 200–350 words
+- BOFU: 250–400 words
 
-**NEVER:**
-- Rewrite the post from scratch using "the same theme"
-- Create a new post "inspired by" the competitor post
-- Change the structure because you think a different structure would work better
-- Start with a different kind of hook
-
-If you find yourself writing a post that doesn't look like the original with swapped words, stop and redo it as described above.
+Decide TOFU / MOFU / BOFU based on what the week needs (aim for 2 TOFU + 2 MOFU + 1 BOFU across the week).
 
 ---
 
-## STEP 7 — DISPLAY ALL 5 POSTS
+## STEP 4 — SHOW BOTH POSTS SIDE BY SIDE
 
-Show each post in this format:
+Display in this format:
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-POST [N]/5
-PILLAR:        [name]
-HOOK FORMULA:  [name]
-TYPE:          [TOFU/MOFU/BOFU]
-CHAR COUNT:    [number]
-SOURCE:        [competitor name] — [their post likes]L / [their post comments]C (post id: [id])
+COMPETITOR POST
+Competitor:   [name]
+Likes:        [number]
+Comments:     [number]
+Date:         [date]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-ORIGINAL (first 3 lines):
-[first 3 lines of competitor post verbatim]
+[full competitor post text]
 
-OUR VARIATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHY IT WORKED
+Hook:      [what made it stop the scroll]
+Angle:     [the core insight and why it resonates with ICP]
+Structure: [how the body is organized]
+CTA:       [what it asks for and why it works]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OUR VERSION
+Pillar:       [pillar]
+Type:         [TOFU/MOFU/BOFU]
+Hook formula: [name]
+Char count:   [number]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 [full post text — ready to copy-paste]
 
-WHAT CHANGED: [bullet list of the specific swaps made]
-VISUAL: [Text-only | Single image — description | Carousel — what each slide covers]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT WE BORROWED:  [hook type / angle / structure / CTA mechanic]
+WHAT WE CHANGED:   [everything specific to them → our credentials, tools, proof points]
+VISUAL:            [Text-only | Single image — what it shows | Carousel — slide breakdown]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-After all 5, show a summary table:
+---
 
-| # | Pillar | Source Competitor | Source Likes | Type | Char |
-|---|--------|-------------------|--------------|------|------|
-| 1 | ... | ... | ... | ... | ... |
+## STEP 5 — ASK FOR APPROVAL
+
+After showing both posts, ask:
+
+**What would you like to do?**
+1. **Approve** — upload to Notion and move to the next post
+2. **Revise** — describe the change and I'll rewrite it
+3. **Different competitor post** — pick another source for this pillar
+4. **Different pillar** — skip this pillar, try another
 
 ---
 
-## STEP 8 — ASK FOR ACTION
+## STEP 6 — WHEN APPROVED: UPLOAD + CONTINUE
 
-After displaying all 5, ask:
+When the user approves:
 
-**For each post, what would you like to do?**
-- **Approve** → run `/approve-post` to push to Notion
-- **Revise** → describe the change and I'll rewrite it
-- **Skip** → drop it from this week
-- **Regenerate** → new version with different hook or angle
-
-If the user says "approve all" or "approve [number]", push those posts to Notion using the approve-post skill logic:
-- Create a page in database `8077dce9-dc67-40fe-ae84-38790ee40c7c`
-- Properties: Post Stage = "Draft", Pillar, Hook Formula, Post Type, Visual Required
+**1. Upload to Notion Content Pipeline** (`8077dce9-dc67-40fe-ae84-38790ee40c7c`):
+- Name: first 60 chars of post text
+- Post Stage: "Draft"
+- Pillar: [pillar]
+- Post Type: TOFU / MOFU / BOFU
+- Hook Formula: [name]
+- Hook Used: [first line verbatim]
+- Source: "Competitor Variation"
+- Visual Required: checked if visual needed
+- Agent Notes: why this competitor post was chosen, what we borrowed
 - Full post text in page body
+
+**2. Mark the competitor post as used** — in `competitor_posts.json`, set `used_for_post: true` for the source post.
+
+**3. Immediately move to the next post** — ask:
+> "Done. Ready for the next post? Which pillar, or should I pick the best available?"
+
+Keep going until the user stops or says they have enough for the week.
