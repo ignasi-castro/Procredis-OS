@@ -1,116 +1,144 @@
 ---
 name: monitor-posts
-description: Weekly monitor of Ignasi's published posts. Scrapes current engagement from LinkedIn, surfaces what's resonating with ICP, and generates insights to improve future posts. Run every Monday.
+description: Monitor the last 7 days of Ignasi's posts. Track total engagement and ICP engagement per post. Classify who is engaging (ICP lead, competitor, or other). Update brain files with what's winning so future posts do more of it.
 ---
 
 ## WHAT THIS DOES
 
-Pulls the latest engagement data on Ignasi's recent posts, identifies which topics and hooks are connecting with the ICP, and produces a short brief that informs the week's content decisions.
+For each post published in the last 7 days: track total engagement, identify how much of it is ICP vs competitors vs noise, and update the brain so the content machine learns what resonates with buyers.
 
 ---
 
-## STEP 1 — SCRAPE IGNASI'S RECENT POSTS
+## STEP 1 — SCRAPE LAST 7 DAYS OF POSTS
 
-Use Apify to pull the latest posts from Ignasi's LinkedIn profile.
+Run the Apify actor to pull recent posts from Ignasi's profile:
 
-Run the actor via Bash:
 ```bash
 curl -s -X POST 'https://api.apify.com/v2/acts/supreme_coder~linkedin-post/runs?token=$APIFY_TOKEN' \
   -H 'Content-Type: application/json' \
-  -d '{"urls":["https://www.linkedin.com/in/ignasicastro1/"],"resultsLimit":30,"deepScrape":false}'
+  -d '{"urls":["https://www.linkedin.com/in/ignasicastro1/"],"resultsLimit":10,"deepScrape":false}'
 ```
 
-Wait for the run to complete (poll the run status), then fetch results from the dataset.
+Wait for the run to complete (poll status), fetch results.
 
-Extract for each post: `url`, `text` (first 80 chars as title), `likesCount`, `commentsCount`, `publishedAt`.
+Filter to posts where `publishedAt` is within the last 7 days.
+
+If no posts in the last 7 days: tell the user and stop.
 
 ---
 
-## STEP 2 — LOAD OUR POSTS DATA
+## STEP 2 — FOR EACH POST: COLLECT ENGAGEMENT
+
+For each post from the last 7 days, extract:
+- Post title (first 60 chars)
+- Total likes
+- Total comments
+- LinkedIn URL
+
+Then ask the user:
+
+> "I found [N] posts from the last 7 days. For each one, I need you to review who liked and commented — go to the post on LinkedIn and paste in the names + job titles of people who engaged. Focus on anyone that looks like a lead or a competitor."
+
+For each post, the user provides a list like:
+```
+- John Smith — VP Sales at Acme Corp
+- Maria García — RevOps Manager at SaaS Co
+- Dan Rosenthal — GTM consultant (competitor)
+- [etc]
+```
+
+If the user can't or won't review engagement for a post, skip ICP classification for that post and log total only.
+
+---
+
+## STEP 3 — CLASSIFY EACH PERSON
+
+For each name/title the user provides, classify them as:
+
+**ICP** — if they match any of:
+- VP Sales, Head of Sales, Sales Director, CRO
+- VP RevOps, Head of RevOps, Revenue Operations Manager
+- VP Marketing, Head of Growth, CMO
+- Founder, Co-founder, CEO at a B2B company (any size)
+- Any GTM leader at a B2B SaaS company
+
+**Competitor** — if they are:
+- A GTM consultant, LinkedIn content creator, agency owner, or any of the 5 tracked competitors and their networks
+
+**Other** — everyone else (SDRs, students, recruiters, etc.)
+
+Count per post:
+- `icp_count` — number of ICP engagements
+- `competitor_count` — number of competitor engagements
+- `other_count` — everyone else
+- `icp_ratio` — icp_count / total_likes (as a %)
+
+---
+
+## STEP 4 — UPDATE our_posts.json
 
 Read `/Users/luiscastro/LinkedIn-Content-OS/data/our_posts.json`.
 
-For each scraped post, match to our_posts.json by:
-1. LinkedIn URL (exact match)
-2. Or first 60 chars of text (fuzzy match)
+For each monitored post, find it by LinkedIn URL or title and update:
+- `total_likes` → fresh scraped value
+- `total_comments` → fresh scraped value
+- `icp_likes` → icp_count
+- `icp_comments` → ICP comments count
+- `fluff_engagements` → total_likes - icp_count
 
-If a match is found: update `total_likes` and `total_comments` with the fresh scraped values.
-If no match is found: note it as a new untracked post (ask user if they want to add it).
-
-Save the updated `our_posts.json`.
-
----
-
-## STEP 3 — CALCULATE ICP ENGAGEMENT
-
-ICP engagement cannot be scraped automatically — it requires manually checking who liked/commented.
-
-Ask the user: "Do you want to log ICP engagement for any posts this week? If yes, which posts and what are the ICP like/comment counts?"
-
-ICP = VP Sales, VP RevOps, CRO, Head of Marketing/Growth, Founders/CEOs at B2B companies (20–300 employees or $2M+ raised).
-
-If they provide ICP data, update those posts in our_posts.json:
-- `icp_likes` → new value
-- `icp_comments` → new value
-- `fluff_engagements` → (total_likes - icp_likes) + (total_comments - icp_comments)
-
-If they skip: proceed with total engagement only.
+Save the file.
 
 ---
 
-## STEP 4 — GENERATE THE WEEKLY PERFORMANCE BRIEF
+## STEP 5 — IDENTIFY WHAT'S WINNING WITH ICP
 
-Analyze the data and produce a brief covering:
+Look across all posts from the last 7 days. Find patterns in the posts with the highest `icp_ratio`:
 
-**Top performers this week** (by total likes):
-- Post title | Pillar | Hook formula | Likes | Comments
-- What made it work (hook type + angle)
-
-**ICP signal** (if data available):
-- Which posts had the highest ICP ratio (icp_likes / total_likes)?
-- What pillar/topic was the ICP responding to?
-- Flag any post where ICP engagement is unusually high: "buyers are paying attention to [topic]"
-
-**Pillar performance** (rolling avg):
-- Avg likes per pillar for last 30 days
-- Which pillar is trending up or down?
-
-**Hook formula ranking** (rolling avg):
-- Which hook formulas are getting the most likes right now?
-
-**Content gap:**
-- Which pillar hasn't had a post in 7+ days?
-- Which TOFU/MOFU/BOFU type is underrepresented?
-
-**Voice insights:**
-- Are shorter or longer posts performing better lately?
-- Any hook pattern showing up in multiple top performers?
+- What pillar were they in?
+- What hook formula did they use?
+- What was the core angle or topic?
+- How long was the post?
+- What was the CTA?
 
 ---
 
-## STEP 5 — RECOMMENDATIONS
+## STEP 6 — UPDATE THE BRAIN
 
-Based on the analysis, give 3 specific recommendations for the coming week:
+Based on what's winning with ICP, update the relevant brain files:
 
-1. **Pillar to double down on** — highest ICP signal
-2. **Hook formula to use** — best performing in last 30 days
-3. **Topic gap to fill** — what the ICP is not seeing yet but would respond to
+**Update `/Users/luiscastro/LinkedIn-Content-OS/brain/voice.md`:**
+- Add a "What's working now" section (or update it if it exists) with:
+  - Which hook formulas are getting ICP engagement
+  - Sentence length and post length that ICP responds to
+  - Any specific phrases or angles that drove ICP reactions
 
-Format as:
+**Update `/Users/luiscastro/LinkedIn-Content-OS/brain/pillars.md`:**
+- Under the winning pillar(s), add a note: "ICP responding to: [specific topic/angle] — [date]"
+- If a pillar got zero ICP engagement this week, note it
+
+Keep updates concise — one or two lines per insight. Don't overwrite existing content, append to it.
+
+---
+
+## STEP 7 — REPORT
+
+Show a simple per-post summary:
+
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-WEEKLY PERFORMANCE BRIEF — [date]
+POST MONITOR — [date range]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TOP POST THIS WEEK:   [title] — [likes]L / [comments]C
-BEST PILLAR (30d):   [pillar] — [avg]L avg
-BEST HOOK (30d):     [hook formula]
-ICP SIGNAL:          [what topic ICP engaged with most]
+[Post title]
+Total: [likes]L / [comments]C
+ICP:   [icp_count] ([icp_ratio]%) | Competitors: [n] | Other: [n]
+Pillar: [pillar] | Hook: [hook formula]
+─────────────────────────────────────────────────
+[Post title]
+...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT'S WINNING WITH ICP THIS WEEK:
+[2-3 lines: which pillar, hook, angle got the most ICP engagement]
 
-RECOMMENDATIONS FOR THIS WEEK:
-1. [pillar + why]
-2. [hook formula + why]
-3. [topic gap + why]
+Brain updated: voice.md + pillars.md
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
-
-Ask at the end: "Ready to run /weekly-posts with this data in mind?"
