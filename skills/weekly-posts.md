@@ -65,26 +65,26 @@ Then analyze it — answer these questions before writing anything:
 
 ## STEP 3 — BUILD OUR VERSION
 
-Now write our post. The goal is NOT to copy — it is to use the same strategic weapons (hook type, angle, structure, CTA mechanic) that made the competitor post work, loaded with our voice, our proof points, and our ICP.
+Write our post using the same hook type, angle, structure, and CTA mechanic that made the competitor post work — but in different words so it reads as original, not copied.
 
-**What to carry over from the competitor post:**
-- The hook TYPE (e.g. bold contrarian claim, specific number, authority opener) — not the words
-- The core angle (e.g. "everyone thinks X but actually Y") — adapted to our pillar
-- The body structure (e.g. numbered framework, before/after) — rebuilt with our content
-- The CTA mechanic (e.g. "comment X to get Y", question, DM offer) — if it fits us
+**Keep it light on Procredis branding.** Don't force proof points, client names, or credentials into every post. Only add them if they fit naturally. The post should read like a practitioner sharing a genuine insight — not a sales pitch.
 
-**What to replace entirely:**
-- All specific claims → our proof points and verified stats only
-- Their tools → our tools (Clay, HubSpot, Instantly.ai, HeyReach.io, Parabola)
-- Their credentials → Ignasi's credentials and Procredis's results
-- Their clients/cases → our proof points (following accuracy rules above)
+**What to carry over:**
+- The hook TYPE — not the words, the mechanism (bold claim, specific number, contrarian take, curiosity gap)
+- The core angle — the same insight adapted to our pillar/subject
+- The body structure — same shape (numbered list, before/after, framework) with different content
+- The CTA mechanic — same type of ask if it fits
 
-**Voice rules (from voice.md — always apply):**
+**What to change:**
+- The specific subject → ours (e.g. their SDR story → our outbound story)
+- Their tools/names → ours, only if it comes up naturally
+- Any claim that would be false for us → omit or replace with something true
+
+**Voice (always):**
 - Short sentences. One idea per line.
-- Lead with the result, never with context.
-- Numbers: volume + metric + contrast wherever possible.
+- Lead with the result or the tension, never with context.
 - No emojis unless they add visual structure (→ ✓ ok, 🚀 🙏 not ok)
-- Tone: direct, confident, practitioner — not guru, not coach
+- Tone: direct, confident, practitioner
 
 **Post length:**
 - TOFU: 150–250 words
