@@ -43,13 +43,6 @@
 
 ---
 
-## How to use competitor intelligence
-
-When generating posts, the `/weekly-posts` skill will:
-1. Check `data/competitor_posts.json` for high-performing posts from these people (added manually or via scraping)
-2. Identify the **angle** and **hook formula** that worked
-3. Rewrite using Procredis voice, proof points, and our specific experience
-4. Never copy — always transform: different angle, our data, our clients, our POV
 
 ## Tracking threshold
 A competitor post is worth replicating if it has:
